@@ -1,41 +1,27 @@
-def anidada(cadena):
-
+def verificación_string(string):
+    
     stack = []
 
-    pares = {
-        ')': '(',
-        ']': '[',
-        '}': '{'
+    par = {
+        "}":"{",
+        "]" : "[",
+        ")" : "("
     }
 
-    for caracter in cadena:
-
-        # si es apertura
-        if caracter in "([{":
-            stack.append(caracter)
-
-        # si es cierre
+    for char in string:
+        if char in par:
+            if stack == []:
+                return 0
+            
+            else:
+                if par[char] == stack[-1]:
+                    stack.pop()
         else:
-
-            # stack vacio
-            if len(stack) == 0:
-                return 0
-
-            # verificar coincidencia
-            ultimo = stack.pop()
-
-            if ultimo != pares[caracter]:
-                return 0
-
-    # si quedaron aperturas sin cerrar
-    if len(stack) != 0:
-        return 0
-
-    return 1
-
-
-print(anidada("()"))
-print(anidada("([{}])"))
-print(anidada("(]"))
-print(anidada("({[)]}"))
-print(anidada(""))
+            stack.append(char)
+    
+    return 1 if stack == [] else 0
+    
+print(verificación_string(""))
+print(verificación_string("}{[(}]}"))
+print(verificación_string("{[()()]}"))
+print(verificación_string("{[(}]}"))
